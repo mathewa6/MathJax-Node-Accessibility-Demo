@@ -5,22 +5,23 @@ It processes the string and returns the original *HTML* with the *LaTeX* element
 
 ## Installation:
 1. [Node.js](https://nodejs.org/en/) must be installed on the system.
-2. Setup application values:
-   2.1 Open `modules/accessor.js`
+2. Setup application values:   
+   2.1 Open `modules/accessor.js`   
    2.2 Change:
    - `apiKey` (line 9)
    - `salt` (line 10)
    - `username`(line 16)
    - `password` (line 16)
  
-   2.3 Open `server.js`:
-   2.4 Change:
+   2.3 Open `server.js`:   
+   2.4 Change:   
    - Port `3000` (line18)
 
-3. Install application dependencies:
-   3.1 Navigate into the application root path.
+3. Install application dependencies:   
+   3.1 Navigate into the application root path.   
    3.2 Exectue `npm install` command.
-4. Run `node server.js`. A process manager like [PM2](https://www.npmjs.com/package/pm2) is recommended for production use.
+4. Run `node server.js`.   
+A process manager like [PM2](https://www.npmjs.com/package/pm2) is recommended for production use.
 
 ## Endpoints:
 - /access (**GET**)
