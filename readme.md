@@ -5,7 +5,7 @@ It processes the string and returns the original *HTML* with the *LaTeX* element
 
 ## Installation:
 1. Make sure [Node.js](https://nodejs.org/en/) is installed on the system.
-2. Download *MathJax-Node-Accessibility-Demo* and extract `MathJax-Node-Accessibility-Demo-master`. You can rename this folder if you like.
+2. Download *MathJax-Node-Accessibility-Demo* and extract `MathJax-Node-Accessibility-Demo-master`. You can rename this folder.
 3. Navigate into the extracted folder.
 4. Adjust following *MathJax-Node-Accessibility-Demo* presets to your preffered values:  
    4.1 Open `modules/accessor.js` and adjust:
@@ -21,8 +21,9 @@ It processes the string and returns the original *HTML* with the *LaTeX* element
 5. You are done with the presets now. *MathJax-Node-Accessibility-Demo* requires a number of *Node.js* modules in order to be executed. To install these modules just follow these two steps:     
    5.1 With commandline navigate to the *MathJax-Node-Accessibility-Demo* folder. `server.js` is located in this folder.   
    5.2 Exectue the `npm install` command. This will trigger the Node Package Manager to install all dependencies (which are defined in package.json) for you.   
+
 6. Everything is set up now. Run `node server.js` to start the application.
- Process manager like [PM2](https://www.npmjs.com/package/pm2) is recommended for production use.
+ Process manager like [PM2](https://www.npmjs.com/package/pm2) are recommended for production use.
 
 ## Endpoints:
 - /access (**GET**)
