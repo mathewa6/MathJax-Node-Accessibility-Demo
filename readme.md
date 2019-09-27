@@ -7,7 +7,7 @@ It processes the string and returns the original *HTML* with the *LaTeX* element
 1. Make sure [Node.js](https://nodejs.org/en/) is installed on the system.
 2. Download *MathJax-Node-Accessibility-Demo* and extract `MathJax-Node-Accessibility-Demo-master`. You can rename this folder.
 3. Navigate into the extracted folder.
-4. Adjust following *MathJax-Node-Accessibility-Demo* presets to your preffered values. If you run *MathJax-Node-Accessibility-Demo* locally you can skip step 4: 
+4. Adjust following *MathJax-Node-Accessibility-Demo* presets to your preffered values. If you run *MathJax-Node-Accessibility-Demo* locally you can skip step 4:   
    4.1 Open `modules/accessor.js` and adjust:
    - `apiKey` (line 9)
    - `salt` (line 10)
