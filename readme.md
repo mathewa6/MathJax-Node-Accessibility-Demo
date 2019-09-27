@@ -4,24 +4,25 @@ A *Node.js* application that receives *HTML* combined with raw *LaTeX* syntax as
 It processes the string and returns the original *HTML* with the *LaTeX* elements converted into *SVG* and invisible *MathML*.
 
 ## Installation:
-1. [Node.js](https://nodejs.org/en/) must be installed on the system.
-2. Setup application values:   
-   2.1 Open `modules/accessor.js`   
-   2.2 Change:
+1. Make sure [Node.js](https://nodejs.org/en/) is installed on the system.
+2. Download *MathJax-Node-Accessibility-Demo* and extract `MathJax-Node-Accessibility-Demo-master`. You can rename this folder if you like.
+3. Navigate into the extracted folder.
+4. Adjust following *MathJax-Node-Accessibility-Demo* presets to your preffered values:  
+   4.1 Open `modules/accessor.js` and adjust:
    - `apiKey` (line 9)
    - `salt` (line 10)
    - `username`(line 16)
    - `password` (line 16)
  
-   2.3 Open `server.js`:   
-   2.4 Change:   
-   - Port `3000` (line18)
+   4.2 Open `/server.js`:   
+   4.3 Adjust Port `3000` (line18) to the port number under which *MathJax-Node-Accessibility-Demo* should be accessed.
+      If you run *MathJax-Node-Accessibility-Demo* locally the port does not necessarily need to be changed.
 
-3. Install application dependencies:   
-   3.1 Navigate into the application root path.   
-   3.2 Exectue `npm install` command.
-4. Run `node server.js`.   
-A process manager like [PM2](https://www.npmjs.com/package/pm2) is recommended for production use.
+5. You are done with the presets now. *MathJax-Node-Accessibility-Demo* requires a number of *Node.js* modules in order to be executed. To install these modules just follow these two steps:     
+   5.1 With commandline navigate to the *MathJax-Node-Accessibility-Demo* folder. `server.js` is located in this folder.   
+   5.2 Exectue the `npm install` command. This will trigger the Node Package Manager to install all dependencies (which are defined in package.json) for you.   
+6. Everything is set up now. Run `node server.js` to start the application.
+ Process manager like [PM2](https://www.npmjs.com/package/pm2) is recommended for production use.
 
 ## Endpoints:
 - /access (**GET**)
@@ -48,6 +49,47 @@ A process manager like [PM2](https://www.npmjs.com/package/pm2) is recommended f
       The success-value will be 1 (true) or 0 (false).
       The content-value will contain information about occuring errors. 
       If everything is fine, the output will contain the returned *HTML* string.
+
+
+## cUrl Commands
+
+#### /access
+```
+curl --user username:password http://127.0.0.1:3000/access
+```
+
+- username
+  Your defined username. Please refer **Installation 4.1**
+- password
+  Your defined password. Please refer **Installation 4.1**
+- http://127.0.0.1
+  If run on localhost
+- :3000
+  The application Port. Please refer **Installation 4.3**
+- /access
+  Access route. Used to retrieve bearer token Please refer **Endpoints**
+
+#### /process
+```
+curl -X POST \
+  http://127.0.0.1:3000/process \
+  -H 'Authorization: Bearer bearertoken' \
+  -H 'Content-Type: application/json' \
+  -H 'cache-control: no-cache' \
+  -d '{"latex":"latexformula"}'
+```
+
+
+- http://127.0.0.1 
+ If run on localhost
+- :3000
+  the application Port. Please refer **Installation 4.3**
+- /process
+  Process route. Used to retrieve bearer token Please refer **Endpoints**
+- bearertoken
+  Your bearertoken
+- latexformula
+  Your Latex formula (Backslashes must currently be escaped with another backslash)
 
 ## Todos:
 - Apply *TLS* support:
