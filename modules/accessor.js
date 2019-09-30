@@ -17,45 +17,50 @@ module.exports = {
         };
     },
 
+    hasBasicAuthHeader: (user) => {
+        return typeof user !== 'undefined'
+            && typeof user.name !== 'undefined'
+            && typeof user.pass !== 'undefined';
+    },
+
     isPasswordCorrect: (user) => {
-        return module.exports.getUser()[user.name].password == SHA3(user.pass + module.exports.getConfig().salt);
+        return module.exports.getUser()[user.name].password 
+            == SHA3(user.pass + module.exports.getConfig().salt);
     },
 
     verifyLogin: async(req, res, next) => {
         try {
             var user = BASICAUTH(req);
 
-            if (typeof user !== 'undefined'
-            && typeof user.name !== 'undefined'
-            && typeof user.pass !== 'undefined') {
-
-                if (!module.exports.getUser()[user.name]) {
-                    res.status(403).send({
-                        success: 0,
-                        content: 'the specified user does not exist'
-                    });
-                    return;
-                }
-                if (!module.exports.isPasswordCorrect(user)) {
-                    res.status(403).send({
-                        success: 0,
-                        content: 'the entered password is not correct'
-                    });
-                    return;
-                }
-                if (module.exports.getUser()[user.name]
-                && module.exports.isPasswordCorrect(user)) {
-                    req.user = user.name;
-                    next();
-                    return;
-                }
-            } else {
+            if (!module.exports.hasBasicAuthHeader(user)) {
                 res.status(401).send({
                     success: 0,
                     content: 'missing (basic auth) header'
                 });
                 return;
             }
+
+            if (!module.exports.getUser()[user.name]) {
+                res.status(403).send({
+                    success: 0,
+                    content: 'the specified user does not exist'
+                });
+                return;
+            }
+            if (!module.exports.isPasswordCorrect(user)) {
+                res.status(403).send({
+                    success: 0,
+                    content: 'the entered password is not correct'
+                });
+                return;
+            }
+            if (module.exports.getUser()[user.name]
+                && module.exports.isPasswordCorrect(user)) {
+                req.user = user.name;
+                next();
+                return;
+            }
+            
         } catch (error) {
             console.log(error);
             res.status(500).send({
