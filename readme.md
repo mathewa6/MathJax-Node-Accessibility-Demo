@@ -32,7 +32,7 @@ The application is now running and listening to port 3000 or to the port you spe
    - Returns *Bearer token*.
 - /process (**POST**)
    - Requires valid token (*Bearer token*) and *JSON* input in body.
-   - Returns *HTML* output.
+   - Returns *HTML* output.   
    **Input structure (body)**
       ```
       {
