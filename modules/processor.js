@@ -19,6 +19,8 @@ module.exports = {
                 return;
             }
 
+            req.body.latex = req.body.latex.replace("\\(", "$").replace("\\)", "$").replace("\\[", "$").replace("\\]", "$");
+
             mjpage(req.body.latex, {
                 format: ["TeX"],
                 fragment: true,
@@ -34,15 +36,7 @@ module.exports = {
                     output
                 );
                 return;
-            }, (error) => {
-                console.log(error)
-                res.status(500).send({
-                    success: 0,
-                    content: 'an error occured during processRequest()'
-                });
-                return;
-            })
-            .on('afterConversion', function(parsedFormula) {
+            }).on('afterConversion', function(parsedFormula) {
 
                 parsedFormula.node.innerHTML = '<span style="position: absolute !important; top: 0; left: 0; clip: rect(1px 1px 1px 1px);' +
                 'padding: 1px 0 0 0 !important; border: 0 !important; height: 1px !important; width: 1px !important;' +
