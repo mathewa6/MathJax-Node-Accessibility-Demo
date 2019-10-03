@@ -96,8 +96,15 @@ curl -X POST \
 
 ## Further information:
 - *LaTeX* delimiters can be `\(` and `\)` or `\[` and `\]`   
-- At the moment single backslashes will be evaluated as escape characters within you input string. Make sure to add **double backslashes** `\\` in any case needed.   
 - Make sure that your requests body content type is set to *JSON*   
+- Remember that the following characters are reserved for JSON and must be escaped within your requests body.   
+     - Backspace is replaced with \b   
+     - Form feed is replaced with \f   
+     - Newline is replaced with \n   
+     - Carriage return is replaced with \r   
+     - Tab is replaced with \t   
+     - Double quote is replaced with \\"   
+     - Backslash is replaced with \\\\   
 
 ## Todos:
 - Apply *TLS* support:   
