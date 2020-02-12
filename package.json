@@ -15,6 +15,7 @@
         "helmet": "latest",
         "js-sha3": "latest",
         "jsonwebtoken": "latest",
-        "mathjax-node-page": "latest"
+        "mathjax-node-page": "latest",
+        "speech-rule-engine": "^3.0.0-beta.6"
     }
 }

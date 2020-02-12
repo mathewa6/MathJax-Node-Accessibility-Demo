@@ -1,4 +1,5 @@
 const mjpage = require('mathjax-node-page').mjpage;
+const sre = require('speech-rule-engine');
 
 module.exports = {
     processRequest: async(req, res) => {
@@ -38,11 +39,11 @@ module.exports = {
                 return;
             }).on('afterConversion', function(parsedFormula) {
 
-                parsedFormula.node.innerHTML = '<span style="position: absolute !important; top: 0; left: 0; clip: rect(1px 1px 1px 1px);' +
-                'padding: 1px 0 0 0 !important; border: 0 !important; height: 1px !important; width: 1px !important;' +
-                'overflow: hidden !important; display: block !important; -webkit-touch-callout: none; -webkit-user-select: none;' +
-                '-khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;"> ' +
-                parsedFormula.outputFormula.mml + '</span>' + parsedFormula.outputFormula.svg;
+                sre.setupEngine({locale: 'en'});
+
+                parsedFormula.node.innerHTML = '<span style="font-size: 0px;"> ' +
+                    sre.toSpeech(parsedFormula.outputFormula.mml) +
+                    '</span>' + parsedFormula.outputFormula.svg;
 
                 var title = parsedFormula.node.getElementsByTagName("title")[0];
                 if (title) {
