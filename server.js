@@ -5,18 +5,11 @@ const HTTP          = require('http').Server(APP);
 const BODYPARSER    = require('body-parser');
 
 APP.use(HELMET());
-APP.use(BODYPARSER.json());
-APP.use((error, _req, res, next) => {
-    if (error instanceof SyntaxError) {
-        res.status(400).send({
-            success: 0,
-            content: 'Request includes invalid JSON syntax'
-        });
-    } else {
-      next();
-    }
-});
-
+APP.use(BODYPARSER.json({limit: "50mb"}));
+APP.use(BODYPARSER.urlencoded({
+    limit: "50mb", 
+    extended: true, 
+    parameterLimit:50000}));
 
 const ACCESSOR      = require('./modules/accessor');
 const PROCESSOR     = require('./modules/processor');
