@@ -36,7 +36,7 @@ The application is now running and listening to port 3000 or to the port you spe
    **Input structure (body)**
       ```
       {
-          latex: value
+          html: ["value1", "value2", "value3", ...]
       }
       ```
       latex-value can be Text, *HTML* combined with *LaTeX* notations.   
@@ -46,12 +46,14 @@ The application is now running and listening to port 3000 or to the port you spe
       ```
       {
           success: value,
-          content: value
+          timeMS: value
+          content: ["value1", "value2", "value3", ...]
       }
       ```
       The success-value will be 1 (true) or 0 (false).
+      The timeMS-value will contain information about the processing time.
       The content-value will contain information about occuring errors. 
-      If everything is fine, the output will contain the returned *HTML* string.
+      If everything is fine, the outputs content value will consist of the returned *HTML* strings packed into an array.
 
 
 ## cURL Commands

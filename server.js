@@ -1,43 +1,46 @@
-const EXPRESS       = require('express');
-const HELMET        = require('helmet');
+const EXPRESS       = require( 'express' );
+const HELMET        = require( 'helmet' );
 const APP           = EXPRESS();
-const HTTP          = require('http').Server(APP);
-const BODYPARSER    = require('body-parser');
+const HTTP          = require( 'http' ).Server( APP );
+const BODYPARSER    = require( 'body-parser' );
 
-APP.use(HELMET());
-APP.use(BODYPARSER.json());
-APP.use((error, _req, res, next) => {
-    if (error instanceof SyntaxError) {
-        res.status(400).send({
+APP.use( HELMET() );
+APP.use( BODYPARSER.json() );
+APP.use( ( error, _req, res, next ) => {
+    if ( error instanceof SyntaxError ) {
+        res.status( 400 ).send( {
             success: 0,
             content: 'Request includes invalid JSON syntax'
-        });
+        } );
     } else {
       next();
     }
-});
+} );
+
+const TIMER         = require( './modules/timer' );
+const ACCESSOR      = require( './modules/accessor' );
+const PROCESSOR     = require( './modules/processor' );
+const VALIDATOR     = require( './modules/validator' );
 
 
-const ACCESSOR      = require('./modules/accessor');
-const PROCESSOR     = require('./modules/processor');
+HTTP.listen( process.env.PORT || 3000, function() {
+    console.log( '====================================' );
+    console.log( 'Service started.....................' );
+    console.log( '====================================' );
+} );
 
-HTTP.listen(process.env.PORT || 3000, function() {
-    console.log('====================================');
-    console.log('Service started.....................');
-    console.log('====================================');
-});
-
-process.on('uncaughtException', function (error) {
-    console.log(error)
-});
+process.on( 'uncaughtException', function ( error ) {
+    console.log( error )
+} );
 
 // =============================================================
 // Routing.
 // =============================================================
 
-APP.get('/', (_req, res) => {
-    res.send({
+APP.get( '/', TIMER.start, ( req, res ) => {
+    res.send( {
         success: 1,
+        timeMS: TIMER.end( req.body.starttime ),
         content: {
             routes: {
                 '/access': {
@@ -59,32 +62,34 @@ APP.get('/', (_req, res) => {
                 }
             }
         }
-    });
+    } );
     return;
-}),
+} ),
 
-APP.get('/access', ACCESSOR.verifyLogin, (req, res) => {
-    ACCESSOR.sendToken(req, res);
+APP.get( '/access', TIMER.start, ACCESSOR.verifyLogin, ( req, res ) => {
+    ACCESSOR.sendToken( req, res );
     return;
-});
+} );
 
-APP.get('*', (_req, res) => {
-    res.status(404).send({
+APP.get( '*', TIMER.start, ( req, res ) => {
+    res.status( 404 ).send( {
         success: 0,
+        timeMS: TIMER.end( req.body.starttime ),
         content: 'no such route'
-    });
+    } );
     return;
-});
+} );
 
-APP.post('/process/', ACCESSOR.verifyToken, (req, res) => {
-    PROCESSOR.processRequest(req, res);
+APP.post( '/process/', TIMER.start, ACCESSOR.verifyToken, VALIDATOR.validate, ( req, res ) => {
+    PROCESSOR.processRequest( req, res );
     return;
-});
+} );
 
-APP.post('*', (_req, res) => {
-    res.status(404).send({
+APP.post( '*', TIMER.start, ( req, res ) => {
+    res.status( 404 ).send( {
         success: 0,
+        timeMS: TIMER.end( req.body.starttime ),
         content: 'no such route'
-    });
+    } );
     return;
-});
+} );
