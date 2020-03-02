@@ -4,23 +4,12 @@ const APP           = EXPRESS();
 const HTTP          = require( 'http' ).Server( APP );
 const BODYPARSER    = require( 'body-parser' );
 
-APP.use( HELMET() );
-APP.use( BODYPARSER.json() );
-APP.use( ( error, _req, res, next ) => {
-    if ( error instanceof SyntaxError ) {
-        res.status( 400 ).send( {
-            success: 0,
-            content: 'Request includes invalid JSON syntax'
-        } );
-    } else {
-      next();
-    }
-} );
-
-const TIMER         = require( './modules/timer' );
-const ACCESSOR      = require( './modules/accessor' );
-const PROCESSOR     = require( './modules/processor' );
-const VALIDATOR     = require( './modules/validator' );
+APP.use(HELMET());
+APP.use(BODYPARSER.json({limit: "50mb"}));
+APP.use(BODYPARSER.urlencoded({
+    limit: "50mb", 
+    extended: true, 
+    parameterLimit:50000}));
 
 
 HTTP.listen( process.env.PORT || 3000, function() {
