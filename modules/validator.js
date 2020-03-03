@@ -8,7 +8,7 @@ module.exports = {
                 res.status( 400 ).send( {
                     success: 0,
                     timeMS: TIMER.end( req.body.starttime ),
-                    content: 'request has no body'
+                    errorMsg: 'request has no body'
                 } );
                 return;
             }
@@ -17,7 +17,7 @@ module.exports = {
                 res.status( 400 ).send( {
                     success: 0,
                     timeMS: TIMER.end( req.body.starttime ),
-                    content: 'request has no language attribute and/or value in body'
+                    errorMsg: 'request has no language attribute and/or value in body'
                 } );
                 return;
             }
@@ -26,7 +26,7 @@ module.exports = {
                 res.status( 400 ).send( {
                     success: 0,
                     timeMS: TIMER.end( req.body.starttime ),
-                    content: 'selected language is not valid'
+                    errorMsg: 'selected language is not valid'
                 } );
                 return;
             }
@@ -35,7 +35,7 @@ module.exports = {
                 res.status( 400 ).send( {
                     success: 0,
                     timeMS: TIMER.end( req.body.starttime ),
-                    content: 'request has no html attribute and/or value in body'
+                    errorMsg: 'request has no html attribute and/or value in body'
                 } );
                 return;
             }
@@ -44,7 +44,7 @@ module.exports = {
                 res.status( 400 ).send( {
                     success: 0,
                     timeMS: TIMER.end( req.body.starttime ),
-                    content: 'request html value is empty'
+                    errorMsg: 'request html value is empty'
                 } );
                 return;
             }
@@ -57,7 +57,7 @@ module.exports = {
             res.status( 500 ).send( {
                 success: 0,
                 timeMS: TIMER.end( req.body.starttime ),
-                content: 'an error occured during validation'
+                errorMsg: 'an error occured during validation'
             } );
             return;
         }

@@ -17,14 +17,14 @@ module.exports = {
                 res.status( 201 ).send( {
                     success: 1,
                     timeMS: TIMER.end( req.body.starttime ),
-                    content: output
+                    html: output
                 } );
                 return;
             } ).catch( ( error ) => {
                 res.status( 500 ).send( {
                     success: 0,
                     timeMS: TIMER.end( req.body.starttime ),
-                    content: 'an error occured in mjpageconversion()'
+                    errorMsg: 'an error occured in mjpageconversion()'
                 } );
                 return;
             } ) ;
@@ -33,7 +33,7 @@ module.exports = {
             res.status( 500 ).send( {
                 success: 0,
                 timeMS: TIMER.end( req.body.starttime ),
-                content: 'an error occured in processRequest()'
+                errorMsg: 'an error occured in processRequest()'
             } );
             return;
         }
@@ -48,7 +48,7 @@ module.exports = {
                 linebreaks: true,
                 singleDollars: true,
                 speakText: false,
-                extensions: 'TeX/mhchem.js'
+                extensions: 'TeX/mhchem.js, TeX/AMSmath.js, TeX/AMSsymbols.js'
             }, {
                 mml: true,
                 svg: true

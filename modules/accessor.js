@@ -37,7 +37,7 @@ module.exports = {
                 res.status( 401 ).send( {
                     success: 0,
                     timeMS: TIMER.end( req.body.starttime ),
-                    content: 'missing (basic auth) header'
+                    errorMsg: 'missing (basic auth) header'
                 } );
                 return;
             }
@@ -46,7 +46,7 @@ module.exports = {
                 res.status( 403 ).send( {
                     success: 0,
                     timeMS: TIMER.end( req.body.starttime ),
-                    content: 'the specified user does not exist'
+                    errorMsg: 'the specified user does not exist'
                 } );
                 return;
             }
@@ -54,7 +54,7 @@ module.exports = {
                 res.status( 403 ).send( {
                     success: 0,
                     timeMS: TIMER.end( req.body.starttime ),
-                    content: 'the entered password is not correct'
+                    errorMsg: 'the entered password is not correct'
                 } );
                 return;
             }
@@ -70,7 +70,7 @@ module.exports = {
             res.status( 500 ).send( {
                 success: 0,
                 timeMS: TIMER.end( req.body.starttime ),
-                content: 'an error occured in VerifyLogin()'
+                errorMsg: 'an error occured in VerifyLogin()'
             } );
             return;
         }
@@ -90,7 +90,7 @@ module.exports = {
                         res.status( 403 ).send( {
                             success: 0,
                             timeMS: TIMER.end( req.body.starttime ),
-                            content: 'no valid token'
+                            errorMsg: 'no valid token'
                         } );
                         return;
                     } else {
@@ -101,7 +101,7 @@ module.exports = {
                 res.status( 401 ).send( {
                     success: 0,
                     timeMS: TIMER.end( req.body.starttime ),
-                    content: 'no token entered'
+                    errorMsg: 'no token entered'
                 } );
                 return;
             }
@@ -110,7 +110,7 @@ module.exports = {
             res.status( 500 ).send( {
                 success: 0,
                 timeMS: TIMER.end( req.body.starttime ),
-                content: 'an error occured in verifyToken()'
+                errorMsg: 'an error occured in verifyToken()'
             } );
             return;
         }
@@ -123,7 +123,7 @@ module.exports = {
                 res.status( 201 ).send( {
                     success: 1,
                     timeMS: TIMER.end( req.body.starttime ),
-                    content: token
+                    token: token
                 } );
                 return;
             } );
@@ -132,7 +132,7 @@ module.exports = {
             res.status( 500 ).send( {
                 success: 0,
                 timeMS: TIMER.end( req.body.starttime ),
-                content: 'an error occured in sendToken()'
+                errorMsg: 'an error occured in sendToken()'
             } );
             return;
         }

@@ -45,24 +45,22 @@ APP.get( '/', TIMER.start, ( req, res ) => {
     res.send( {
         success: 1,
         timeMS: TIMER.end( req.body.starttime ),
-        content: {
-            routes: {
-                '/access': {
-                    type: 'GET',
-                    auth: {
-                        type: 'Basic Auth',
-                        required: 'Username, Password'
-                    }
+        routes: {
+            '/access': {
+                type: 'GET',
+                auth: {
+                    type: 'Basic Auth',
+                    required: 'Username, Password'
+                }
+            },
+            '/process': {
+                type: 'POST',
+                auth: {
+                    type: 'Bearer Token',
+                    required: 'Token'
                 },
-                '/process': {
-                    type: 'POST',
-                    auth: {
-                        type: 'Bearer Token',
-                        required: 'Token'
-                    },
-                    body: {
-                        type: 'Json'
-                    }
+                body: {
+                    type: 'Json'
                 }
             }
         }
@@ -79,12 +77,12 @@ APP.get( '*', TIMER.start, ( req, res ) => {
     res.status( 404 ).send( {
         success: 0,
         timeMS: TIMER.end( req.body.starttime ),
-        content: 'no such route'
+        errorMsg: 'no such route'
     } );
     return;
 } );
 
-APP.post( '/process/', TIMER.start, ACCESSOR.verifyToken, VALIDATOR.validate, ( req, res ) => {
+APP.post( '/process', TIMER.start, ACCESSOR.verifyToken, VALIDATOR.validate, ( req, res ) => {
     PROCESSOR.processRequest( req, res );
     return;
 } );
@@ -93,7 +91,7 @@ APP.post( '*', TIMER.start, ( req, res ) => {
     res.status( 404 ).send( {
         success: 0,
         timeMS: TIMER.end( req.body.starttime ),
-        content: 'no such route'
+        errorMsg: 'no such route'
     } );
     return;
 } );

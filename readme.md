@@ -32,15 +32,18 @@ The application is now running and listening to port 3000 or to the port you spe
    - Returns *Bearer token*.
 - /process (**POST**)
    - Requires valid token (*Bearer token*) and *JSON* input in body.
-   - Returns *HTML* output.   
+   - Make sure that your requests body content type is set to *JSON*.
    **Input structure (body)**
       ```
       {
+          language: "en",
           html: ["value1", "value2", "value3", ...]
       }
       ```
-      latex-value can be Text, *HTML* combined with *LaTeX* notations.   
-      Make sure that your requests body content type is set to *JSON*
+      `html`-attribute:
+      Contains an array of strings. Each string can be a *Text*/*HTML* combined with *LaTeX* notations.
+      `language`-attribute:
+      Contains a string ("en"/"de") which defines the language of the `html`-attribute's values. The `language`-attribute will be important for generating speaktext. Note: Currently this setting has no effect, since german speaktext is yet to be implemented.
 
       **Output structure:**
       ```
@@ -50,10 +53,14 @@ The application is now running and listening to port 3000 or to the port you spe
           content: ["value1", "value2", "value3", ...]
       }
       ```
-      The success-value will be 1 (true) or 0 (false).
-      The timeMS-value will contain information about the processing time.
-      The content-value will contain information about occuring errors. 
-      If everything is fine, the outputs content value will consist of the returned *HTML* strings packed into an array.
+      `success`-attribute:
+      Value will be 1 (true) or 0 (false), depending on the status.
+      `timeMS`-attribute:
+      Value will contain information about the serverside processing time.
+      `content`-attribute:
+      Value will contain information about occuring errors (if `success`-attribute equals 0)
+      OR 
+      the value will contain *HTML* strings packed into an array (if `success`-attribute equals 1).
 
 
 ## cURL Commands
