@@ -51,7 +51,7 @@ The application is now running and listening to port 3000 or to the port you spe
           success: value,
           timeMS: value,
           errorMsg: value,
-          content: ["value1", "value2", "value3", ...]
+          html: ["value1", "value2", "value3", ...]
       }
       ```
       `success`-attribute:    
