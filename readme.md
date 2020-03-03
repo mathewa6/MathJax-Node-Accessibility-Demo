@@ -49,18 +49,19 @@ The application is now running and listening to port 3000 or to the port you spe
       ```
       {
           success: value,
-          timeMS: value
+          timeMS: value,
+          errorMsg: value,
           content: ["value1", "value2", "value3", ...]
       }
       ```
-      `success`-attribute:
-      Value will be 1 (true) or 0 (false), depending on the status.
-      `timeMS`-attribute:
-      Value will contain information about the serverside processing time.
-      `content`-attribute:
-      Value will contain information about occuring errors (if `success`-attribute equals 0)
-      OR 
-      the value will contain *HTML* strings packed into an array (if `success`-attribute equals 1).
+      `success`-attribute:    
+      Value will be 1 (true) or 0 (false), depending on the status.    
+      `timeMS`-attribute:    
+      Value will contain information about the serverside processing time.    
+      `errorMsg`-attribute (appended if success = 0):    
+      the value will contain an error message.    
+      `html`-attribute (appended if success = 1):    
+      the value will contain *HTML* strings packed into an array.    
 
 
 ## cURL Commands
