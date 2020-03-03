@@ -7,9 +7,9 @@ const BODYPARSER    = require( 'body-parser' );
 APP.use( HELMET() );
 APP.use( BODYPARSER.json( { limit: "50mb" } ) );
 APP.use( BODYPARSER.urlencoded( {
-    limit: "50mb", 
-    extended: true, 
-    parameterLimit:50000} ) );
+    limit: "50mb",
+    extended: true,
+    parameterLimit: 50000 } ) );
 
 APP.use( ( error, _req, res, next ) => {
     if ( error instanceof SyntaxError ) {
@@ -60,7 +60,11 @@ APP.get( '/', TIMER.start, ( req, res ) => {
                     required: 'Token'
                 },
                 body: {
-                    type: 'Json'
+                    type: 'Json',
+                    structure: {
+                        'language': "en/de",
+                        'html': [ "string1", "string2", "string3" ]
+                    }
                 }
             }
         }

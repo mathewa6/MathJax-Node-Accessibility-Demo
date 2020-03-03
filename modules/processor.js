@@ -30,6 +30,7 @@ module.exports = {
             } ) ;
 
         } catch ( error ) {
+            console.log( error );
             res.status( 500 ).send( {
                 success: 0,
                 timeMS: TIMER.end( req.body.starttime ),

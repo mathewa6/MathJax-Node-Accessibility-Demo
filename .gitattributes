@@ -1,9 +1,9 @@
-*			text=auto
+*       text=auto
 
-*.js		eol=lf
-*.json		eol=lf
-*.md		eol=lf
+*.js    eol=lf
+*.json  eol=lf
+*.md    eol=lf
 
-*.js		text
-*.json		text
-*.md		text
+*.js    text
+*.json  text
+*.md    text
