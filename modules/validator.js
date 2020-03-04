@@ -1,6 +1,7 @@
 const TIMER = require( './timer' );
 
 module.exports = {
+
     validate: async( req, res, next ) => {
         try {
 

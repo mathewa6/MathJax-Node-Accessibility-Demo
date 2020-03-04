@@ -56,7 +56,7 @@ APP.get( '/', TIMER.start, ( req, res ) => {
 } ),
 
 APP.get( '/hello', ( _req, res ) => {
-    res.status( 200 ).send("hello");
+    res.status( 200 ).send( 'hello' );
     return;
 });
 

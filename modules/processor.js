@@ -4,6 +4,7 @@ const SRE       = require( 'speech-rule-engine' );
       SRE.setupEngine( { locale: 'en' } );
 
 module.exports = {
+
     processRequest: async( req, res ) => {
         try {
             var promises = [];
@@ -44,6 +45,7 @@ module.exports = {
             return;
         }
     },
+
     mjpageconversion: async( html, language ) => {
 
         return new Promise( ( resolve, reject ) => {
@@ -64,19 +66,23 @@ module.exports = {
 
                 // Todo. Implement different language support
                 parsedFormula.node.innerHTML = '<p aria-hidden="false" class="sr-only pLatexText"> ' +
-                SRE.toSpeech( parsedFormula.outputFormula.mml ) +
-                    '</p>' +parsedFormula.outputFormula.svg +
-                    '<span class="mathMLFormula" aria-hidden="true">' + parsedFormula.outputFormula.mml + '</span>';
+                                                SRE.toSpeech( parsedFormula.outputFormula.mml ) +
+                                                '</p>' +
+                                                parsedFormula.outputFormula.svg +
+                                                '<span class="mathMLFormula" aria-hidden="true">' +
+                                                parsedFormula.outputFormula.mml +
+                                                '</span>';
 
                 var title = parsedFormula.node.getElementsByTagName( "title" )[ 0 ];
                 if ( title ) {
                     title.parentNode.removeChild( title );
                 }
 
-                var label = parsedFormula.node.getElementsByTagName( "svg" )[ 0 ];
-                if ( label ) {
-                    label.removeAttribute( 'aria-labelledby' );
-                    label.setAttribute( 'aria-label', 'Latex Formula' );
+                var svg = parsedFormula.node.getElementsByTagName( "svg" )[ 0 ];
+                if ( svg ) {
+                    svg.removeAttribute( 'aria-labelledby' );
+                    svg.setAttribute( 'aria-label', 'Latex Formula' );
+                    svg.setAttribute( 'aria-hidden', 'true' );
                 }
             } );
         } );
