@@ -19,7 +19,6 @@ module.exports = {
             }
 
             Promise.all( promises ).then( ( output ) => {
-                console.log(output)
                 res.status( 201 ).send( {
                     success: 1,
                     timeMS: TIMER.end( req.body.starttime ),
