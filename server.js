@@ -1,8 +1,13 @@
 const EXPRESS       = require( 'express' );
-const HELMET        = require( 'helmet' );
 const APP           = EXPRESS();
 const HTTP          = require( 'http' ).Server( APP );
+const HELMET        = require( 'helmet' );
 const BODYPARSER    = require( 'body-parser' );
+
+const TIMER         = require( './modules/timer' );
+const ACCESSOR      = require( './modules/accessor' );
+const PROCESSOR     = require( './modules/processor' );
+const VALIDATOR     = require( './modules/validator' );
 
 APP.use( HELMET() );
 APP.use( BODYPARSER.json( { limit: "50mb" } ) );
@@ -11,29 +16,13 @@ APP.use( BODYPARSER.urlencoded( {
     extended: true,
     parameterLimit: 50000 } ) );
 
-APP.use( ( error, _req, res, next ) => {
-    if ( error instanceof SyntaxError ) {
-        res.status( 400 ).send( {
-            success: 0,
-            content: 'Request includes invalid JSON syntax'
-        } );
-    } else {
-        next();
-    }
+HTTP.listen( process.env.PORT || 3000, () => {
+    console.log( '===============' );
+    console.log( 'Service started' );
+    console.log( '===============' );
 } );
 
-const TIMER         = require( './modules/timer' );
-const ACCESSOR      = require( './modules/accessor' );
-const PROCESSOR     = require( './modules/processor' );
-const VALIDATOR     = require( './modules/validator' );
-
-HTTP.listen( process.env.PORT || 3000, function() {
-    console.log( '====================================' );
-    console.log( 'Service started.....................' );
-    console.log( '====================================' );
-} );
-
-process.on( 'uncaughtException', function ( error ) {
+process.on( 'uncaughtException', ( error ) => {
     console.log( error )
 } );
 
@@ -41,36 +30,35 @@ process.on( 'uncaughtException', function ( error ) {
 // Routing.
 // =============================================================
 
+APP.use( ( error, req, res, next ) => {
+    if ( error instanceof SyntaxError ) {
+        res.status( 400 ).send( {
+            success: 0,
+            content: 'Request includes invalid JSON syntax'
+        } );
+        return;
+    } else {
+        next();
+    }
+} );
+
 APP.get( '/', TIMER.start, ( req, res ) => {
-    res.send( {
+    res.status( 200 ).send( {
         success: 1,
         timeMS: TIMER.end( req.body.starttime ),
-        routes: {
-            '/access': {
-                type: 'GET',
-                auth: {
-                    type: 'Basic Auth',
-                    required: 'Username, Password'
-                }
-            },
-            '/process': {
-                type: 'POST',
-                auth: {
-                    type: 'Bearer Token',
-                    required: 'Token'
-                },
-                body: {
-                    type: 'Json',
-                    structure: {
-                        'language': "en/de",
-                        'html': [ "string1", "string2", "string3" ]
-                    }
-                }
-            }
-        }
+        routes: [
+            '/access',
+            '/process',
+            '/hello'
+        ]
     } );
     return;
 } ),
+
+APP.get( '/hello', ( _req, res ) => {
+    res.status( 200 ).send("hello");
+    return;
+});
 
 APP.get( '/access', TIMER.start, ACCESSOR.verifyLogin, ( req, res ) => {
     ACCESSOR.sendToken( req, res );

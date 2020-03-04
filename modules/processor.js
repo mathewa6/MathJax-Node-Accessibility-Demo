@@ -9,11 +9,17 @@ module.exports = {
             var promises = [];
 
             for ( var key in req.body.html ) {
-                req.body.html[ key ] = req.body.html[ key ].replace( "\\(", "$" ).replace( "\\)", "$" ).replace( "\\[", "$$$$" ).replace( "\\]", "$$$$" );
+                req.body.html[ key ] = req.body.html[ key ]
+                    .replace( "\\(", "$" )
+                    .replace( "\\)", "$" )
+                    .replace( "\\[", "$$$$" )
+                    .replace( "\\]", "$$$$" );
+
                 promises.push( module.exports.mjpageconversion( req.body.html[ key ], req.body.language ) );
             }
 
             Promise.all( promises ).then( ( output ) => {
+                console.log(output)
                 res.status( 201 ).send( {
                     success: 1,
                     timeMS: TIMER.end( req.body.starttime ),
@@ -58,9 +64,10 @@ module.exports = {
             } ).on( 'afterConversion', function( parsedFormula ) {
 
                 // Todo. Implement different language support
-                parsedFormula.node.innerHTML = '<span style="font-size: 0px;"> ' +
+                parsedFormula.node.innerHTML = '<p aria-hidden="false" class="sr-only pLatexText"> ' +
                 SRE.toSpeech( parsedFormula.outputFormula.mml ) +
-                    '</span>' + parsedFormula.outputFormula.svg;
+                    '</p>' +parsedFormula.outputFormula.svg +
+                    '<span class="mathMLFormula" aria-hidden="true">' + parsedFormula.outputFormula.mml + '</span>';
 
                 var title = parsedFormula.node.getElementsByTagName( "title" )[ 0 ];
                 if ( title ) {

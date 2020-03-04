@@ -15,7 +15,7 @@ It processes the string and returns the original *HTML* with the *LaTeX* element
    - `password` (line 17)
  
    4.2 Open `/server.js`:   
-   4.3 Adjust Port `3000` (line 30) to the port number under which *MathJax-Node-Accessibility-Demo* should be accessed.
+   4.3 Adjust Port `3000` (line 19) to the port number under which *MathJax-Node-Accessibility-Demo* should be accessed.
 
 5. You are done with configuring the presets now. *MathJax-Node-Accessibility-Demo* requires a number of *Node.js* modules in order to be executed.   To install these modules just follow the next two steps:   
    5.1 Navigate into the *MathJax-Node-Accessibility-Demo* folder with commandline (`server.js` is located in this folder).   
@@ -61,7 +61,7 @@ The application is now running and listening to port 3000 or to the port you spe
       `errorMsg`-attribute (appended if success = 0):    
       the value will contain an error message.    
       `html`-attribute (appended if success = 1):    
-      the value will contain *HTML* strings packed into an array.    
+      the value will contain *HTML* strings packed into an array. Each value must be unescaped, e.g with decodeURI().    
 
 
 ## cURL Commands
