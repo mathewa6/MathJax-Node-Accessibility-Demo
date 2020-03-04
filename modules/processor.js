@@ -9,7 +9,7 @@ module.exports = {
             var promises = [];
 
             for ( var key in req.body.html ) {
-                req.body.html[ key ] = req.body.html[ key ].replace( "\\(", "$" ).replace( "\\)", "$" ).replace( "\\[", "$" ).replace( "\\]", "$" );
+                req.body.html[ key ] = req.body.html[ key ].replace( "\\(", "$" ).replace( "\\)", "$" ).replace( "\\[", "$$$$" ).replace( "\\]", "$$$$" );
                 promises.push( module.exports.mjpageconversion( req.body.html[ key ], req.body.language ) );
             }
 
