@@ -83,6 +83,7 @@ module.exports = {
                     svg.removeAttribute( 'aria-labelledby' );
                     svg.setAttribute( 'aria-label', 'Latex Formula' );
                     svg.setAttribute( 'aria-hidden', 'true' );
+                    svg.style.maxWidth = "100%";
                 }
             } );
         } );
