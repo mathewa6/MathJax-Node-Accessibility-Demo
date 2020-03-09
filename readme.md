@@ -89,7 +89,7 @@ curl -X POST \
   -H 'Authorization: Bearer bearertoken' \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
-  -d '{"latex":"latexformula"}'
+  -d '{"html":"latexformula"}'
 ```
 
 
