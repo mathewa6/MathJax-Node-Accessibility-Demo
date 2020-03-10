@@ -89,7 +89,7 @@ curl -X POST \
   -H 'Authorization: Bearer bearertoken' \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
-  -d '{"html":"latexformula"}'
+  -d '{"languange":"en","html":["string1","string2","string3,...]}'
 ```
 
 
@@ -101,8 +101,8 @@ curl -X POST \
   Process route. Used to retrieve bearer token Please refer **Endpoints**
 - bearertoken   
   Your bearertoken
-- latexformula   
-  Your Latex formula
+- html   
+  Your escaped html content strings which will be processed individually.
 
 ## Further information:
 - *LaTeX* delimiters can be `\(` and `\)` or `\[` and `\]`   
