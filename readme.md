@@ -9,10 +9,7 @@ It processes the string and returns the original *HTML* with the *LaTeX* element
 3. Navigate into the extracted folder.   
 4. If you run *MathJax-Node-Accessibility-Demo* locally you can skip this step and continue with step 5. Otherwise adjust following presets to your preffered values:   
    4.1 Open `modules/accessor.js` and adjust:   
-   - `apiKey` (line 10)
-   - `salt` (line 11)
-   - `username`(line 17)
-   - `password` (line 17)
+   - the list of `apiKeys` (line 7 ff.)
  
    4.2 Open `/server.js`:   
    4.3 Adjust Port `3000` (line 19) to the port number under which *MathJax-Node-Accessibility-Demo* should be accessed.
@@ -27,11 +24,11 @@ The application is now running and listening to port 3000 or to the port you spe
 (a process manager like [PM2](https://www.npmjs.com/package/pm2) is recommended for production use).
 
 ## Endpoints:
-- /access (**GET**)
-   - Requires username and password (*Basic Auth*).
-   - Returns *Bearer token*.
+
+- /hello (**GET**)
+   - Returns "hello" as string if the service is running.
 - /process (**POST**)
-   - Requires valid token (*Bearer token*) and *JSON* input in body.
+   - Requires a valid API Key in header and *JSON* input in body.
    - Make sure that your requests body content type is set to *JSON*.
    **Input structure (body)**
       ```
@@ -65,31 +62,27 @@ The application is now running and listening to port 3000 or to the port you spe
 
 
 ## cURL Commands
-
-#### /access
+#### /hello
 ```
-curl --user username:password http://127.0.0.1:3000/access
+curl --location --request GET '127.0.0.1:3000/hello'
 ```
 
-- username   
-  Your defined username. Please refer **Installation 4.1**
-- password   
-  Your defined password. Please refer **Installation 4.1**
-- http://127.0.0.1   
-  If run on localhost
+
+- http://127.0.0.1 
+ If run on localhost
 - :3000   
-  The application Port. Please refer **Installation 4.3**
-- /access   
-  Access route. Used to retrieve bearer token Please refer **Endpoints**
+  the application Port. Please refer **Installation 4.3**
+- /hello   
+  Process route. Please refer **Endpoints**
 
 #### /process
 ```
 curl -X POST \
   http://127.0.0.1:3000/process \
-  -H 'Authorization: Bearer bearertoken' \
+  -H 'apikey: apikey' \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
-  -d '{"latex":"latexformula"}'
+  -d '{"language":"en", "html":["value1","value2","value3"]}'
 ```
 
 
@@ -98,11 +91,12 @@ curl -X POST \
 - :3000   
   the application Port. Please refer **Installation 4.3**
 - /process   
-  Process route. Used to retrieve bearer token Please refer **Endpoints**
-- bearertoken   
-  Your bearertoken
-- latexformula   
-  Your Latex formula
+  Process route. Please refer **Endpoints**
+- apikey   
+  Your secret API Key, as defined by an administrator in `modules/accessor.js` (refer to **Installation 4.1**)
+   Used to authenticate the client.
+- html   
+  Your escaped html content strings which will be processed individually.
 
 ## Further information:
 - *LaTeX* delimiters can be `\(` and `\)` or `\[` and `\]`   

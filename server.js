@@ -47,7 +47,6 @@ APP.get( '/', TIMER.start, ( req, res ) => {
         success: 1,
         timeMS: TIMER.end( req.body.starttime ),
         routes: [
-            '/access',
             '/process',
             '/hello'
         ]
@@ -60,11 +59,6 @@ APP.get( '/hello', ( _req, res ) => {
     return;
 });
 
-APP.get( '/access', TIMER.start, ACCESSOR.verifyLogin, ( req, res ) => {
-    ACCESSOR.sendToken( req, res );
-    return;
-} );
-
 APP.get( '*', TIMER.start, ( req, res ) => {
     res.status( 404 ).send( {
         success: 0,
@@ -74,7 +68,7 @@ APP.get( '*', TIMER.start, ( req, res ) => {
     return;
 } );
 
-APP.post( '/process', TIMER.start, ACCESSOR.verifyToken, VALIDATOR.validate, ( req, res ) => {
+APP.post( '/process', TIMER.start, ACCESSOR.verifyApiKey, VALIDATOR.validate, ( req, res ) => {
     PROCESSOR.processRequest( req, res );
     return;
 } );
