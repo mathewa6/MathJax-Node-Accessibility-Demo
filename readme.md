@@ -79,7 +79,7 @@ curl --location --request GET '127.0.0.1:3000/hello'
 ```
 curl -X POST \
   http://127.0.0.1:3000/process \
-  -H 'apikey: apikey' \
+  -H 'API-Key: apikey' \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
   -d '{"language":"en", "html":["value1","value2","value3"]}'

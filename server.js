@@ -52,12 +52,12 @@ APP.get( '/', TIMER.start, ( req, res ) => {
         ]
     } );
     return;
-} ),
+} );
 
 APP.get( '/hello', ( _req, res ) => {
     res.status( 200 ).send( 'hello' );
     return;
-});
+} );
 
 APP.get( '*', TIMER.start, ( req, res ) => {
     res.status( 404 ).send( {
