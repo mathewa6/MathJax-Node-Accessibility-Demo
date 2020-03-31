@@ -13,7 +13,6 @@ module.exports = {
 
     verifyApiKey: async( req, res, next ) => {
         try {
-            console.log(req.headers)
             const apiKey = req.headers[ 'api-key' ];
 
             if ( typeof apiKey !== 'undefined' ) {

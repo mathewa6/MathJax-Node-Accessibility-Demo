@@ -1,7 +1,7 @@
 const TIMER     = require( './timer' );
 const MJPAGE    = require( 'mathjax-node-page' ).mjpage;
 const SRE       = require( 'speech-rule-engine' );
-      SRE.setupEngine( { locale: 'en' } );
+      SRE.setupEngine( { locale: 'en', domain: 'mathspeak' } );
 
 module.exports = {
 
@@ -64,7 +64,12 @@ module.exports = {
                 resolve( output );
             } ).on( 'afterConversion', function( parsedFormula ) {
 
-                // Todo. Implement different language support
+                if (language == 'en') {
+                    SRE.setupEngine( { locale: 'en', domain: 'mathspeak' } );
+                } else {
+                    SRE.setupEngine( { locale: 'de', domain: 'mathspeak' } );
+                }
+
                 parsedFormula.node.innerHTML = '<p aria-hidden="false" class="sr-only pLatexText"> ' +
                                                 SRE.toSpeech( parsedFormula.outputFormula.mml ) +
                                                 '</p>' +
