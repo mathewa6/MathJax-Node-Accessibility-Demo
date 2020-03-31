@@ -40,7 +40,7 @@ The application is now running and listening to port 3000 or to the port you spe
       `html`-attribute:
       Contains an array of strings. Each string can be a *Text*/*HTML* combined with *LaTeX* notations.
       `language`-attribute:
-      Contains a string ("en"/"de") which defines the language of the `html`-attribute's values. The `language`-attribute will be important for generating speaktext. Note: Currently this setting has no effect, since german speaktext is yet to be implemented.
+      Contains a string ("en"/"de") which defines the language of the `html`-attribute's values. The `language`-attribute determines the language of the output speaktext. 
 
       **Output structure:**
       ```
