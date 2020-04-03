@@ -1,38 +1,24 @@
-const PROCESSOR     = require( './modules/processor' );
+const PROCESSOR		= require( './modules/processor' );
 
 module.exports = {
 
-	convert: async( html ) => {
+	convert: async( html, language ) => {
 
-        try {
-            var promises = [];
+		try {
 
-            for ( var key in req.body.html ) {
-                req.body.html[ key ] = req.body.html[ key ]
-                    .replace( "\\(", "$" )
-                    .replace( "\\)", "$" )
-                    .replace( "\\[", "$$$$" )
-                    .replace( "\\]", "$$$$" );
+			html = html
+			.replace( "\\(", "$" )
+			.replace( "\\)", "$" )
+			.replace( "\\[", "$$$$" )
+			.replace( "\\]", "$$$$" );
 
-                promises.push( PROCESSOR.mjpageconversion( req.body.html[ key ], req.body.language ) );
-            }
+			return PROCESSOR.mjpageconversion( html, language );
 
-            Promise
-            .all( promises )
-            .then( ( output ) => {
-                // output
-                return;
-            } )
-            .catch( ( error ) => {
-                consle.log( error, 'an error occured in mjpageconversion()' );
-                return;
-            } ) ;
+		} catch ( error ) {
+			console.log( error, 'an error occured in processRequest()');
+			return;
+		}
 
-        } catch ( error ) {
-            console.log( error, 'an error occured in processRequest()');
-            return;
-        }
-
-    }
+	}
 
 }
