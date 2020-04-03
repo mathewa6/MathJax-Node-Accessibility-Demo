@@ -6,12 +6,7 @@ module.exports = {
 
 		try {
 
-			html = html
-			.replace( "\\(", "$" )
-			.replace( "\\)", "$" )
-			.replace( "\\[", "$$$$" )
-			.replace( "\\]", "$$$$" );
-
+			html = PROCESSOR.extract( html );
 			return PROCESSOR.mjpageconversion( html, language );
 
 		} catch ( error ) {

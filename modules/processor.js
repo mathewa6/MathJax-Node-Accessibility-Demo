@@ -5,16 +5,20 @@ const SRE       = require( 'speech-rule-engine' );
 
 module.exports = {
 
+    extract: ( html ) => {
+        return html
+        .replace( "\\(", "$" )
+                    .replace( "\\)", "$" )
+                    .replace( "\\[", "$$$$" )
+                    .replace( "\\]", "$$$$" );
+    },
+
     processRequest: async( req, res ) => {
         try {
             var promises = [];
 
             for ( var key in req.body.html ) {
-                req.body.html[ key ] = req.body.html[ key ]
-                    .replace( "\\(", "$" )
-                    .replace( "\\)", "$" )
-                    .replace( "\\[", "$$$$" )
-                    .replace( "\\]", "$$$$" );
+                req.body.html[ key ] = module.exports.extract( req.body.html[ key ] )
 
                 promises.push( module.exports.mjpageconversion( req.body.html[ key ], req.body.language ) );
             }
