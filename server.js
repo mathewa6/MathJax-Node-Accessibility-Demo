@@ -8,6 +8,7 @@ const TIMER         = require( './modules/timer' );
 const ACCESSOR      = require( './modules/accessor' );
 const PROCESSOR     = require( './modules/processor' );
 const VALIDATOR     = require( './modules/validator' );
+const IDX			= require( './index');
 
 APP.use( HELMET() );
 APP.use( BODYPARSER.json( { limit: "50mb" } ) );
@@ -48,6 +49,7 @@ APP.get( '/', TIMER.start, ( req, res ) => {
         timeMS: TIMER.end( req.body.starttime ),
         routes: [
             '/process',
+            '/debug',
             '/hello'
         ]
     } );
@@ -72,6 +74,26 @@ APP.post( '/process', TIMER.start, ACCESSOR.verifyApiKey, VALIDATOR.validate, ( 
     PROCESSOR.processRequest( req, res );
     return;
 } );
+
+APP.post( '/debug', VALIDATOR.validate, ( req, res ) => {
+
+    for ( var key in req.body.html ) {
+        req.body.html[ key ] = PROCESSOR.extract( req.body.html[ key ] )
+
+        IDX.convert( req.body.html[ key ], req.body.language ).then( ( output ) => {
+
+                res.status( 201 ).send( {
+                    success: 1,
+                    html: output
+                } );
+
+                return;
+            } );
+    }
+
+    return;
+} )
+
 
 APP.post( '*', TIMER.start, ( req, res ) => {
     res.status( 404 ).send( {
