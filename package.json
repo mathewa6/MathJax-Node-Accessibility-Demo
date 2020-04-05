@@ -1,5 +1,5 @@
 {
-    "name": "MathJax-Node-Accessibility-Demo",
+    "name": "mathlet",
     "version": "1.0.0",
     "description": "",
     "main": "server.js",
