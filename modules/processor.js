@@ -52,7 +52,6 @@ module.exports = {
 
     mjpageconversion: async( html, language ) => {
         const includesvg = false
-        const includetext = false
         return new Promise( ( resolve, reject ) => {
             MJPAGE( html, {
                 format: [ "TeX" ],
@@ -76,14 +75,10 @@ module.exports = {
                 }
 
                 // Hide the mathml if svg and text is included
-                output = '<span class="mathMLFormula" aria-hidden="${includesvg && includetext}">' +
+                output = '<span class="mathMLFormula" aria-hidden="${includesvg}">' +
                         parsedFormula.outputFormula.mml +
                         '</span>'
-                output = (includetext ? output + '<p style="display:none;" aria-hidden="false" class="sr-only pLatexText"> ' +
-                        SRE.toSpeech( parsedFormula.outputFormula.mml ) +
-                        '</p>' : output);
-
-                parsedFormula.node.innerHTML = (includesvg ? output + parsedFormula.outputFormula.svg : output);
+                parsedFormula.node.innerHTML = (includesvg ? parsedFormula.outputFormula.svg : output);
 
                 var title = parsedFormula.node.getElementsByTagName( "title" )[ 0 ];
                 if ( title ) {
@@ -93,8 +88,8 @@ module.exports = {
                 var svg = parsedFormula.node.getElementsByTagName( "svg" )[ 0 ];
                 if ( svg ) {
                     svg.removeAttribute( 'aria-labelledby' );
-                    svg.setAttribute( 'aria-label', 'Latex Formula' );
-                    svg.setAttribute( 'aria-hidden', 'true' );
+                    svg.setAttribute( 'aria-label', SRE.toSpeech( parsedFormula.outputFormula.mml ) );
+                    svg.setAttribute( 'aria-hidden', 'false' );
                     svg.style.maxWidth = "100%";
                 }
             } );
