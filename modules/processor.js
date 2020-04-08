@@ -51,7 +51,8 @@ module.exports = {
     },
 
     mjpageconversion: async( html, language ) => {
-
+        const includesvg = false
+        const includetext = false
         return new Promise( ( resolve, reject ) => {
             MJPAGE( html, {
                 format: [ "TeX" ],
@@ -63,7 +64,7 @@ module.exports = {
                 extensions: 'TeX/mhchem.js, TeX/AMSmath.js, TeX/AMSsymbols.js'
             }, {
                 mml: true,
-                svg: true
+                svg: includesvg
             }, ( output ) => {
                 resolve( output );
             } ).on( 'afterConversion', function( parsedFormula ) {
@@ -74,13 +75,15 @@ module.exports = {
                     SRE.setupEngine( { locale: 'de', domain: 'mathspeak' } );
                 }
 
-                parsedFormula.node.innerHTML = '<p aria-hidden="false" class="sr-only pLatexText"> ' +
-                                                SRE.toSpeech( parsedFormula.outputFormula.mml ) +
-                                                '</p>' +
-                                                parsedFormula.outputFormula.svg +
-                                                '<span class="mathMLFormula" aria-hidden="true">' +
-                                                parsedFormula.outputFormula.mml +
-                                                '</span>';
+                // Hide the mathml if svg and text is included
+                output = '<span class="mathMLFormula" aria-hidden="${includesvg && includetext}">' +
+                        parsedFormula.outputFormula.mml +
+                        '</span>'
+                output = (includetext ? output + '<p style="display:none;" aria-hidden="false" class="sr-only pLatexText"> ' +
+                        SRE.toSpeech( parsedFormula.outputFormula.mml ) +
+                        '</p>' : output);
+
+                parsedFormula.node.innerHTML = (includesvg ? output + parsedFormula.outputFormula.svg : output);
 
                 var title = parsedFormula.node.getElementsByTagName( "title" )[ 0 ];
                 if ( title ) {
